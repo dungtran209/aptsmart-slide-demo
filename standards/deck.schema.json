@@ -1,0 +1,1513 @@
+{
+ "$schema": "http://json-schema.org/draft-07/schema#",
+ "type": "object",
+ "properties": {
+  "meta": {
+   "type": "object",
+   "properties": {
+    "titleMain": {
+     "type": "string",
+     "description": "Phần chính tên đề tài, IN HOA, ≤ 40 ký tự, có thể xuống dòng bằng \\n (vd 'CHO VAY\\nKHÁCH HÀNG CÁ NHÂN')"
+    },
+    "titleSub": {
+     "type": "string",
+     "description": "Phần còn lại của tên đề tài (vd 'tại Ngân hàng … – Chi nhánh Bắc Ninh')"
+    },
+    "titleFull": {
+     "type": "string",
+     "description": "Tên đề tài đầy đủ đúng như luận văn"
+    },
+    "docType": {
+     "type": "string",
+     "description": "vd 'ĐỀ ÁN TỐT NGHIỆP THẠC SĨ', 'LUẬN VĂN THẠC SĨ'"
+    },
+    "school": {
+     "type": "string"
+    },
+    "schoolParent": {
+     "description": "Cơ quan chủ quản, vd 'BỘ GIÁO DỤC VÀ ĐÀO TẠO · BỘ TÀI CHÍNH'",
+     "type": "string"
+    },
+    "orgName": {
+     "type": "string",
+     "description": "Tên đầy đủ đơn vị nghiên cứu"
+    },
+    "orgShort": {
+     "type": "string",
+     "description": "Tên ngắn, vd 'BIDV Bắc Ninh'"
+    },
+    "student": {
+     "type": "string"
+    },
+    "supervisor": {
+     "type": "string"
+    },
+    "major": {
+     "type": "string"
+    },
+    "city": {
+     "type": "string"
+    },
+    "year": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "titleMain",
+    "titleSub",
+    "titleFull",
+    "docType",
+    "school",
+    "orgName",
+    "orgShort",
+    "student",
+    "supervisor",
+    "year"
+   ],
+   "additionalProperties": false
+  },
+  "theme": {
+   "type": "object",
+   "properties": {
+    "primary": {
+     "type": "string",
+     "pattern": "^[0-9A-Fa-f]{6}$"
+    },
+    "accent": {
+     "type": "string",
+     "pattern": "^[0-9A-Fa-f]{6}$"
+    },
+    "mainShape": {
+     "type": "string",
+     "enum": [
+      "diamond",
+      "hex",
+      "hexTall",
+      "slantR",
+      "slantL",
+      "shard",
+      "tab",
+      "arrow",
+      "blob",
+      "circle"
+     ],
+     "description": "Khung chủ đạo theo quy chuẩn mục 3"
+    },
+    "subShape": {
+     "type": "string",
+     "enum": [
+      "diamond",
+      "hex",
+      "hexTall",
+      "slantR",
+      "slantL",
+      "shard",
+      "tab",
+      "arrow",
+      "blob",
+      "circle"
+     ],
+     "description": "Khung phụ"
+    },
+    "motif": {
+     "type": "string",
+     "enum": [
+      "dynamic",
+      "soft"
+     ],
+     "description": "dynamic = dải chéo + ////; soft = vòng tròn + chấm"
+    },
+    "rationale": {
+     "description": "1 câu lý do chọn màu/khung",
+     "type": "string"
+    }
+   },
+   "required": [
+    "mainShape",
+    "subShape",
+    "motif"
+   ],
+   "additionalProperties": false
+  },
+  "issues": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "properties": {
+     "where": {
+      "type": "string",
+      "description": "Vị trí trong luận văn (bảng/mục/trang)"
+     },
+     "detail": {
+      "type": "string",
+      "description": "Mô tả mâu thuẫn, kèm số liệu"
+     }
+    },
+    "required": [
+     "where",
+     "detail"
+    ],
+    "additionalProperties": false
+   },
+   "description": "Số liệu mâu thuẫn phát hiện trong luận văn; [] nếu không có"
+  },
+  "slides": {
+   "minItems": 10,
+   "maxItems": 30,
+   "type": "array",
+   "items": {
+    "oneOf": [
+     {
+      "type": "object",
+      "properties": {
+       "type": {
+        "type": "string",
+        "const": "cover"
+       },
+       "notes": {
+        "description": "Lời thuyết trình 1–2 câu",
+        "type": "string"
+       },
+       "image": {
+        "description": "Ảnh lớn (khung phụ)",
+        "type": "object",
+        "properties": {
+         "id": {
+          "type": "string",
+          "description": "id ảnh người dùng tải lên (img1, img2…)"
+         },
+         "shape": {
+          "description": "Chỉ ghi khi muốn khác khung mặc định của slide",
+          "type": "string",
+          "enum": [
+           "diamond",
+           "hex",
+           "hexTall",
+           "slantR",
+           "slantL",
+           "shard",
+           "tab",
+           "arrow",
+           "blob",
+           "circle"
+          ]
+         }
+        },
+        "required": [
+         "id"
+        ],
+        "additionalProperties": false
+       },
+       "image2": {
+        "description": "Ảnh nhỏ (khung chủ đạo)",
+        "type": "object",
+        "properties": {
+         "id": {
+          "type": "string",
+          "description": "id ảnh người dùng tải lên (img1, img2…)"
+         },
+         "shape": {
+          "description": "Chỉ ghi khi muốn khác khung mặc định của slide",
+          "type": "string",
+          "enum": [
+           "diamond",
+           "hex",
+           "hexTall",
+           "slantR",
+           "slantL",
+           "shard",
+           "tab",
+           "arrow",
+           "blob",
+           "circle"
+          ]
+         }
+        },
+        "required": [
+         "id"
+        ],
+        "additionalProperties": false
+       }
+      },
+      "required": [
+       "type"
+      ],
+      "additionalProperties": false
+     },
+     {
+      "type": "object",
+      "properties": {
+       "type": {
+        "type": "string",
+        "const": "context"
+       },
+       "label": {
+        "type": "string",
+        "description": "Nhãn chương góc trên, vd 'Chương 2 · Thực trạng'"
+       },
+       "title": {
+        "type": "string",
+        "description": "Tiêu đề slide ngắn gọn, 1 dòng (≤ 60 ký tự), không đánh số"
+       },
+       "notes": {
+        "description": "Lời thuyết trình 1–2 câu",
+        "type": "string"
+       },
+       "bullets": {
+        "minItems": 1,
+        "maxItems": 6,
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "label": {
+           "description": "Nhãn in đậm đầu dòng, 1–4 chữ, KHÔNG kèm dấu ':' (vd 'Quy mô')",
+           "type": "string"
+          },
+          "text": {
+           "type": "string",
+           "description": "Nội dung ngắn ≤ 25 chữ, có số liệu nếu có"
+          }
+         },
+         "required": [
+          "text"
+         ],
+         "additionalProperties": false
+        }
+       },
+       "highlight": {
+        "type": "string",
+        "description": "Tên đề tài đầy đủ để highlight ở dòng kết"
+       },
+       "image": {
+        "type": "object",
+        "properties": {
+         "id": {
+          "type": "string",
+          "description": "id ảnh người dùng tải lên (img1, img2…)"
+         },
+         "shape": {
+          "description": "Chỉ ghi khi muốn khác khung mặc định của slide",
+          "type": "string",
+          "enum": [
+           "diamond",
+           "hex",
+           "hexTall",
+           "slantR",
+           "slantL",
+           "shard",
+           "tab",
+           "arrow",
+           "blob",
+           "circle"
+          ]
+         }
+        },
+        "required": [
+         "id"
+        ],
+        "additionalProperties": false,
+        "description": "Ảnh trang trí cắt khối"
+       }
+      },
+      "required": [
+       "type",
+       "label",
+       "title",
+       "bullets",
+       "highlight"
+      ],
+      "additionalProperties": false
+     },
+     {
+      "type": "object",
+      "properties": {
+       "type": {
+        "type": "string",
+        "const": "structure"
+       },
+       "label": {
+        "type": "string",
+        "description": "Nhãn chương góc trên, vd 'Chương 2 · Thực trạng'"
+       },
+       "title": {
+        "type": "string",
+        "description": "Tiêu đề slide ngắn gọn, 1 dòng (≤ 60 ký tự), không đánh số"
+       },
+       "notes": {
+        "description": "Lời thuyết trình 1–2 câu",
+        "type": "string"
+       },
+       "parts": {
+        "minItems": 2,
+        "maxItems": 4,
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "label": {
+           "type": "string",
+           "description": "'Chương 1'…"
+          },
+          "name": {
+           "type": "string",
+           "description": "Tên chương đúng như luận văn"
+          },
+          "desc": {
+           "type": "string",
+           "description": "1 dòng nội dung chính ≤ 25 chữ"
+          }
+         },
+         "required": [
+          "label",
+          "name",
+          "desc"
+         ],
+         "additionalProperties": false
+        }
+       },
+       "image": {
+        "type": "object",
+        "properties": {
+         "id": {
+          "type": "string",
+          "description": "id ảnh người dùng tải lên (img1, img2…)"
+         },
+         "shape": {
+          "description": "Chỉ ghi khi muốn khác khung mặc định của slide",
+          "type": "string",
+          "enum": [
+           "diamond",
+           "hex",
+           "hexTall",
+           "slantR",
+           "slantL",
+           "shard",
+           "tab",
+           "arrow",
+           "blob",
+           "circle"
+          ]
+         }
+        },
+        "required": [
+         "id"
+        ],
+        "additionalProperties": false,
+        "description": "Ảnh trang trí cắt khối"
+       }
+      },
+      "required": [
+       "type",
+       "label",
+       "title",
+       "parts"
+      ],
+      "additionalProperties": false
+     },
+     {
+      "type": "object",
+      "properties": {
+       "type": {
+        "type": "string",
+        "const": "chapter"
+       },
+       "num": {
+        "type": "string",
+        "description": "'01', '02', '03'"
+       },
+       "chapterLabel": {
+        "type": "string",
+        "description": "'CHƯƠNG 1'…"
+       },
+       "name": {
+        "type": "string"
+       },
+       "sub": {
+        "type": "string",
+        "description": "Các nội dung chính, nối bằng ' · '"
+       },
+       "notes": {
+        "description": "Lời thuyết trình 1–2 câu",
+        "type": "string"
+       },
+       "image": {
+        "type": "object",
+        "properties": {
+         "id": {
+          "type": "string",
+          "description": "id ảnh người dùng tải lên (img1, img2…)"
+         },
+         "shape": {
+          "description": "Chỉ ghi khi muốn khác khung mặc định của slide",
+          "type": "string",
+          "enum": [
+           "diamond",
+           "hex",
+           "hexTall",
+           "slantR",
+           "slantL",
+           "shard",
+           "tab",
+           "arrow",
+           "blob",
+           "circle"
+          ]
+         }
+        },
+        "required": [
+         "id"
+        ],
+        "additionalProperties": false,
+        "description": "Ảnh trang trí cắt khối"
+       }
+      },
+      "required": [
+       "type",
+       "num",
+       "chapterLabel",
+       "name",
+       "sub"
+      ],
+      "additionalProperties": false
+     },
+     {
+      "type": "object",
+      "properties": {
+       "type": {
+        "type": "string",
+        "const": "concept"
+       },
+       "label": {
+        "type": "string",
+        "description": "Nhãn chương góc trên, vd 'Chương 2 · Thực trạng'"
+       },
+       "title": {
+        "type": "string",
+        "description": "Tiêu đề slide ngắn gọn, 1 dòng (≤ 60 ký tự), không đánh số"
+       },
+       "notes": {
+        "description": "Lời thuyết trình 1–2 câu",
+        "type": "string"
+       },
+       "definition": {
+        "type": "object",
+        "properties": {
+         "label": {
+          "description": "Nhãn in đậm đầu dòng, 1–4 chữ, KHÔNG kèm dấu ':' (vd 'Quy mô')",
+          "type": "string"
+         },
+         "text": {
+          "type": "string",
+          "description": "Nội dung ngắn ≤ 25 chữ, có số liệu nếu có"
+         }
+        },
+        "required": [
+         "text"
+        ],
+        "additionalProperties": false,
+        "description": "label = 'Khái niệm'; text = định nghĩa 1–2 câu"
+       },
+       "featuresTitle": {
+        "type": "string"
+       },
+       "features": {
+        "minItems": 1,
+        "maxItems": 6,
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "label": {
+           "description": "Nhãn in đậm đầu dòng, 1–4 chữ, KHÔNG kèm dấu ':' (vd 'Quy mô')",
+           "type": "string"
+          },
+          "text": {
+           "type": "string",
+           "description": "Nội dung ngắn ≤ 25 chữ, có số liệu nếu có"
+          }
+         },
+         "required": [
+          "text"
+         ],
+         "additionalProperties": false
+        }
+       },
+       "formsTitle": {
+        "type": "string"
+       },
+       "forms": {
+        "minItems": 2,
+        "maxItems": 5,
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "label": {
+           "description": "Nhãn in đậm đầu dòng, 1–4 chữ, KHÔNG kèm dấu ':' (vd 'Quy mô')",
+           "type": "string"
+          },
+          "text": {
+           "type": "string",
+           "description": "Nội dung ngắn ≤ 25 chữ, có số liệu nếu có"
+          }
+         },
+         "required": [
+          "text"
+         ],
+         "additionalProperties": false
+        },
+        "description": "label = tiêu chí phân loại; text = các loại, nối bằng ' · '"
+       }
+      },
+      "required": [
+       "type",
+       "label",
+       "title",
+       "definition",
+       "featuresTitle",
+       "features",
+       "formsTitle",
+       "forms"
+      ],
+      "additionalProperties": false
+     },
+     {
+      "type": "object",
+      "properties": {
+       "type": {
+        "type": "string",
+        "const": "text2col"
+       },
+       "label": {
+        "type": "string",
+        "description": "Nhãn chương góc trên, vd 'Chương 2 · Thực trạng'"
+       },
+       "title": {
+        "type": "string",
+        "description": "Tiêu đề slide ngắn gọn, 1 dòng (≤ 60 ký tự), không đánh số"
+       },
+       "notes": {
+        "description": "Lời thuyết trình 1–2 câu",
+        "type": "string"
+       },
+       "columns": {
+        "minItems": 2,
+        "maxItems": 2,
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "heading": {
+           "type": "string"
+          },
+          "bullets": {
+           "minItems": 1,
+           "maxItems": 6,
+           "type": "array",
+           "items": {
+            "type": "object",
+            "properties": {
+             "label": {
+              "description": "Nhãn in đậm đầu dòng, 1–4 chữ, KHÔNG kèm dấu ':' (vd 'Quy mô')",
+              "type": "string"
+             },
+             "text": {
+              "type": "string",
+              "description": "Nội dung ngắn ≤ 25 chữ, có số liệu nếu có"
+             }
+            },
+            "required": [
+             "text"
+            ],
+            "additionalProperties": false
+           }
+          }
+         },
+         "required": [
+          "heading",
+          "bullets"
+         ],
+         "additionalProperties": false
+        },
+        "description": "vd Nhân tố chủ quan / khách quan; mỗi dòng '[Nhân tố]: [tác động 1 câu]'"
+       }
+      },
+      "required": [
+       "type",
+       "label",
+       "title",
+       "columns"
+      ],
+      "additionalProperties": false
+     },
+     {
+      "type": "object",
+      "properties": {
+       "type": {
+        "type": "string",
+        "const": "indicatorTable"
+       },
+       "label": {
+        "type": "string",
+        "description": "Nhãn chương góc trên, vd 'Chương 2 · Thực trạng'"
+       },
+       "title": {
+        "type": "string",
+        "description": "Tiêu đề slide ngắn gọn, 1 dòng (≤ 60 ký tự), không đánh số"
+       },
+       "notes": {
+        "description": "Lời thuyết trình 1–2 câu",
+        "type": "string"
+       },
+       "header": {
+        "description": "Mặc định: Nhóm chỉ tiêu | Chỉ tiêu | Công thức / nội dung",
+        "minItems": 3,
+        "maxItems": 3,
+        "type": "array",
+        "items": {
+         "type": "string"
+        }
+       },
+       "groups": {
+        "minItems": 1,
+        "maxItems": 6,
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "name": {
+           "type": "string"
+          },
+          "items": {
+           "minItems": 1,
+           "maxItems": 4,
+           "type": "array",
+           "items": {
+            "type": "object",
+            "properties": {
+             "indicator": {
+              "type": "string"
+             },
+             "formula": {
+              "type": "string"
+             }
+            },
+            "required": [
+             "indicator",
+             "formula"
+            ],
+            "additionalProperties": false
+           }
+          }
+         },
+         "required": [
+          "name",
+          "items"
+         ],
+         "additionalProperties": false
+        }
+       }
+      },
+      "required": [
+       "type",
+       "label",
+       "title",
+       "groups"
+      ],
+      "additionalProperties": false
+     },
+     {
+      "type": "object",
+      "properties": {
+       "type": {
+        "type": "string",
+        "const": "orgIntro"
+       },
+       "label": {
+        "type": "string",
+        "description": "Nhãn chương góc trên, vd 'Chương 2 · Thực trạng'"
+       },
+       "title": {
+        "type": "string",
+        "description": "Tiêu đề slide ngắn gọn, 1 dòng (≤ 60 ký tự), không đánh số"
+       },
+       "notes": {
+        "description": "Lời thuyết trình 1–2 câu",
+        "type": "string"
+       },
+       "milestones": {
+        "minItems": 2,
+        "maxItems": 5,
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "label": {
+           "description": "Nhãn in đậm đầu dòng, 1–4 chữ, KHÔNG kèm dấu ':' (vd 'Quy mô')",
+           "type": "string"
+          },
+          "text": {
+           "type": "string",
+           "description": "Nội dung ngắn ≤ 25 chữ, có số liệu nếu có"
+          }
+         },
+         "required": [
+          "text"
+         ],
+         "additionalProperties": false
+        },
+        "description": "label = mốc thời gian/khía cạnh (Thành lập, Trụ sở…); text = nội dung"
+       },
+       "org": {
+        "type": "object",
+        "properties": {
+         "top": {
+          "type": "string",
+          "description": "Cấp lãnh đạo, vd 'Ban Giám đốc'"
+         },
+         "topSub": {
+          "type": "string"
+         },
+         "units": {
+          "minItems": 2,
+          "maxItems": 10,
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         }
+        },
+        "required": [
+         "top",
+         "units"
+        ],
+        "additionalProperties": false
+       },
+       "source": {
+        "type": "string"
+       },
+       "image": {
+        "type": "object",
+        "properties": {
+         "id": {
+          "type": "string",
+          "description": "id ảnh người dùng tải lên (img1, img2…)"
+         },
+         "shape": {
+          "description": "Chỉ ghi khi muốn khác khung mặc định của slide",
+          "type": "string",
+          "enum": [
+           "diamond",
+           "hex",
+           "hexTall",
+           "slantR",
+           "slantL",
+           "shard",
+           "tab",
+           "arrow",
+           "blob",
+           "circle"
+          ]
+         }
+        },
+        "required": [
+         "id"
+        ],
+        "additionalProperties": false,
+        "description": "Ảnh trang trí cắt khối"
+       }
+      },
+      "required": [
+       "type",
+       "label",
+       "title",
+       "milestones",
+       "org"
+      ],
+      "additionalProperties": false
+     },
+     {
+      "type": "object",
+      "properties": {
+       "type": {
+        "type": "string",
+        "const": "tableChart"
+       },
+       "label": {
+        "type": "string",
+        "description": "Nhãn chương góc trên, vd 'Chương 2 · Thực trạng'"
+       },
+       "title": {
+        "type": "string",
+        "description": "Tiêu đề slide ngắn gọn, 1 dòng (≤ 60 ký tự), không đánh số"
+       },
+       "notes": {
+        "description": "Lời thuyết trình 1–2 câu",
+        "type": "string"
+       },
+       "table": {
+        "type": "object",
+        "properties": {
+         "caption": {
+          "type": "string",
+          "description": "Tên bảng, giữ số hiệu như luận văn nếu có, vd 'Bảng 1.4. Dư nợ cho vay KHCN'"
+         },
+         "unit": {
+          "description": "vd 'Đơn vị: tỷ đồng'",
+          "type": "string"
+         },
+         "source": {
+          "description": "vd 'Nguồn: Báo cáo tín dụng …'",
+          "type": "string"
+         },
+         "header": {
+          "minItems": 2,
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "rows": {
+          "minItems": 1,
+          "maxItems": 13,
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "cells": {
+             "minItems": 1,
+             "type": "array",
+             "items": {
+              "type": "string"
+             }
+            },
+            "style": {
+             "description": "group = dòng nhóm (chỉ 1 ô, trải ngang); total = dòng tổng/in đậm",
+             "type": "string",
+             "enum": [
+              "normal",
+              "group",
+              "total"
+             ]
+            }
+           },
+           "required": [
+            "cells"
+           ],
+           "additionalProperties": false
+          }
+         }
+        },
+        "required": [
+         "caption",
+         "header",
+         "rows"
+        ],
+        "additionalProperties": false
+       },
+       "chart": {
+        "type": "object",
+        "properties": {
+         "type": {
+          "type": "string",
+          "enum": [
+           "column",
+           "bar",
+           "line",
+           "doughnut"
+          ],
+          "description": "column = cột đứng; bar = thanh ngang; doughnut = cơ cấu %"
+         },
+         "title": {
+          "type": "string",
+          "description": "Tiêu đề ngắn kèm đơn vị"
+         },
+         "labels": {
+          "minItems": 2,
+          "maxItems": 10,
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "series": {
+          "minItems": 1,
+          "maxItems": 3,
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "name": {
+             "type": "string"
+            },
+            "values": {
+             "type": "array",
+             "items": {
+              "type": "number"
+             }
+            }
+           },
+           "required": [
+            "name",
+            "values"
+           ],
+           "additionalProperties": false
+          }
+         },
+         "decimals": {
+          "description": "Số chữ số thập phân hiển thị",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2
+         },
+         "percent": {
+          "description": "true nếu giá trị là % (hiển thị kèm ký hiệu %)",
+          "type": "boolean"
+         }
+        },
+        "required": [
+         "type",
+         "title",
+         "labels",
+         "series"
+        ],
+        "additionalProperties": false
+       },
+       "summary": {
+        "type": "string",
+        "description": "Tóm tắt 30–50 chữ, có số liệu, nêu xu hướng và điểm bất thường"
+       }
+      },
+      "required": [
+       "type",
+       "label",
+       "title",
+       "table",
+       "summary"
+      ],
+      "additionalProperties": false
+     },
+     {
+      "type": "object",
+      "properties": {
+       "type": {
+        "type": "string",
+        "const": "assessment"
+       },
+       "label": {
+        "type": "string",
+        "description": "Nhãn chương góc trên, vd 'Chương 2 · Thực trạng'"
+       },
+       "title": {
+        "type": "string",
+        "description": "Tiêu đề slide ngắn gọn, 1 dòng (≤ 60 ký tự), không đánh số"
+       },
+       "notes": {
+        "description": "Lời thuyết trình 1–2 câu",
+        "type": "string"
+       },
+       "achievements": {
+        "minItems": 1,
+        "maxItems": 6,
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "label": {
+           "description": "Nhãn in đậm đầu dòng, 1–4 chữ, KHÔNG kèm dấu ':' (vd 'Quy mô')",
+           "type": "string"
+          },
+          "text": {
+           "type": "string",
+           "description": "Nội dung ngắn ≤ 25 chữ, có số liệu nếu có"
+          }
+         },
+         "required": [
+          "text"
+         ],
+         "additionalProperties": false
+        }
+       },
+       "limitations": {
+        "minItems": 1,
+        "maxItems": 6,
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "code": {
+           "type": "string",
+           "description": "H1, H2…"
+          },
+          "label": {
+           "type": "string"
+          },
+          "text": {
+           "type": "string"
+          }
+         },
+         "required": [
+          "code",
+          "label",
+          "text"
+         ],
+         "additionalProperties": false
+        }
+       }
+      },
+      "required": [
+       "type",
+       "label",
+       "title",
+       "achievements",
+       "limitations"
+      ],
+      "additionalProperties": false
+     },
+     {
+      "type": "object",
+      "properties": {
+       "type": {
+        "type": "string",
+        "const": "causes"
+       },
+       "label": {
+        "type": "string",
+        "description": "Nhãn chương góc trên, vd 'Chương 2 · Thực trạng'"
+       },
+       "title": {
+        "type": "string",
+        "description": "Tiêu đề slide ngắn gọn, 1 dòng (≤ 60 ký tự), không đánh số"
+       },
+       "notes": {
+        "description": "Lời thuyết trình 1–2 câu",
+        "type": "string"
+       },
+       "subjective": {
+        "minItems": 1,
+        "maxItems": 6,
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "label": {
+           "description": "Nhãn in đậm đầu dòng, 1–4 chữ, KHÔNG kèm dấu ':' (vd 'Quy mô')",
+           "type": "string"
+          },
+          "text": {
+           "type": "string",
+           "description": "Nội dung ngắn ≤ 25 chữ, có số liệu nếu có"
+          }
+         },
+         "required": [
+          "text"
+         ],
+         "additionalProperties": false
+        }
+       },
+       "objective": {
+        "minItems": 1,
+        "maxItems": 6,
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "label": {
+           "description": "Nhãn in đậm đầu dòng, 1–4 chữ, KHÔNG kèm dấu ':' (vd 'Quy mô')",
+           "type": "string"
+          },
+          "text": {
+           "type": "string",
+           "description": "Nội dung ngắn ≤ 25 chữ, có số liệu nếu có"
+          }
+         },
+         "required": [
+          "text"
+         ],
+         "additionalProperties": false
+        }
+       },
+       "bridge": {
+        "type": "string",
+        "description": "Câu nối sang Chương 3, vd 'H1–H6 ↔ GP1–GP6'"
+       }
+      },
+      "required": [
+       "type",
+       "label",
+       "title",
+       "subjective",
+       "objective",
+       "bridge"
+      ],
+      "additionalProperties": false
+     },
+     {
+      "type": "object",
+      "properties": {
+       "type": {
+        "type": "string",
+        "const": "goals"
+       },
+       "label": {
+        "type": "string",
+        "description": "Nhãn chương góc trên, vd 'Chương 2 · Thực trạng'"
+       },
+       "title": {
+        "type": "string",
+        "description": "Tiêu đề slide ngắn gọn, 1 dòng (≤ 60 ký tự), không đánh số"
+       },
+       "notes": {
+        "description": "Lời thuyết trình 1–2 câu",
+        "type": "string"
+       },
+       "bullets": {
+        "minItems": 1,
+        "maxItems": 6,
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "label": {
+           "description": "Nhãn in đậm đầu dòng, 1–4 chữ, KHÔNG kèm dấu ':' (vd 'Quy mô')",
+           "type": "string"
+          },
+          "text": {
+           "type": "string",
+           "description": "Nội dung ngắn ≤ 25 chữ, có số liệu nếu có"
+          }
+         },
+         "required": [
+          "text"
+         ],
+         "additionalProperties": false
+        }
+       },
+       "table": {
+        "description": "Bảng mục tiêu ngắn ≤ 8 dòng",
+        "type": "object",
+        "properties": {
+         "caption": {
+          "type": "string",
+          "description": "Tên bảng, giữ số hiệu như luận văn nếu có, vd 'Bảng 1.4. Dư nợ cho vay KHCN'"
+         },
+         "unit": {
+          "description": "vd 'Đơn vị: tỷ đồng'",
+          "type": "string"
+         },
+         "source": {
+          "description": "vd 'Nguồn: Báo cáo tín dụng …'",
+          "type": "string"
+         },
+         "header": {
+          "minItems": 2,
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "rows": {
+          "minItems": 1,
+          "maxItems": 13,
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "cells": {
+             "minItems": 1,
+             "type": "array",
+             "items": {
+              "type": "string"
+             }
+            },
+            "style": {
+             "description": "group = dòng nhóm (chỉ 1 ô, trải ngang); total = dòng tổng/in đậm",
+             "type": "string",
+             "enum": [
+              "normal",
+              "group",
+              "total"
+             ]
+            }
+           },
+           "required": [
+            "cells"
+           ],
+           "additionalProperties": false
+          }
+         }
+        },
+        "required": [
+         "caption",
+         "header",
+         "rows"
+        ],
+        "additionalProperties": false
+       },
+       "image": {
+        "type": "object",
+        "properties": {
+         "id": {
+          "type": "string",
+          "description": "id ảnh người dùng tải lên (img1, img2…)"
+         },
+         "shape": {
+          "description": "Chỉ ghi khi muốn khác khung mặc định của slide",
+          "type": "string",
+          "enum": [
+           "diamond",
+           "hex",
+           "hexTall",
+           "slantR",
+           "slantL",
+           "shard",
+           "tab",
+           "arrow",
+           "blob",
+           "circle"
+          ]
+         }
+        },
+        "required": [
+         "id"
+        ],
+        "additionalProperties": false,
+        "description": "Ảnh trang trí cắt khối"
+       }
+      },
+      "required": [
+       "type",
+       "label",
+       "title",
+       "bullets"
+      ],
+      "additionalProperties": false
+     },
+     {
+      "type": "object",
+      "properties": {
+       "type": {
+        "type": "string",
+        "const": "solutions"
+       },
+       "label": {
+        "type": "string",
+        "description": "Nhãn chương góc trên, vd 'Chương 2 · Thực trạng'"
+       },
+       "title": {
+        "type": "string",
+        "description": "Tiêu đề slide ngắn gọn, 1 dòng (≤ 60 ký tự), không đánh số"
+       },
+       "notes": {
+        "description": "Lời thuyết trình 1–2 câu",
+        "type": "string"
+       },
+       "items": {
+        "minItems": 2,
+        "maxItems": 8,
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "code": {
+           "type": "string",
+           "description": "GP1…"
+          },
+          "name": {
+           "type": "string",
+           "description": "Tên giải pháp ≤ 8 chữ"
+          },
+          "text": {
+           "type": "string",
+           "description": "1 câu nội dung ≤ 25 chữ"
+          },
+          "link": {
+           "description": "Hạn chế đối ứng, vd 'H1'",
+           "type": "string"
+          }
+         },
+         "required": [
+          "code",
+          "name",
+          "text"
+         ],
+         "additionalProperties": false
+        }
+       }
+      },
+      "required": [
+       "type",
+       "label",
+       "title",
+       "items"
+      ],
+      "additionalProperties": false
+     },
+     {
+      "type": "object",
+      "properties": {
+       "type": {
+        "type": "string",
+        "const": "conclusion"
+       },
+       "label": {
+        "type": "string",
+        "description": "Nhãn chương góc trên, vd 'Chương 2 · Thực trạng'"
+       },
+       "title": {
+        "type": "string",
+        "description": "Tiêu đề slide ngắn gọn, 1 dòng (≤ 60 ký tự), không đánh số"
+       },
+       "notes": {
+        "description": "Lời thuyết trình 1–2 câu",
+        "type": "string"
+       },
+       "conclusion": {
+        "type": "string",
+        "description": "Kết luận 30–50 chữ"
+       },
+       "recommendations": {
+        "minItems": 1,
+        "maxItems": 2,
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "heading": {
+           "type": "string"
+          },
+          "bullets": {
+           "minItems": 1,
+           "maxItems": 6,
+           "type": "array",
+           "items": {
+            "type": "object",
+            "properties": {
+             "label": {
+              "description": "Nhãn in đậm đầu dòng, 1–4 chữ, KHÔNG kèm dấu ':' (vd 'Quy mô')",
+              "type": "string"
+             },
+             "text": {
+              "type": "string",
+              "description": "Nội dung ngắn ≤ 25 chữ, có số liệu nếu có"
+             }
+            },
+            "required": [
+             "text"
+            ],
+            "additionalProperties": false
+           }
+          }
+         },
+         "required": [
+          "heading",
+          "bullets"
+         ],
+         "additionalProperties": false
+        }
+       },
+       "image": {
+        "type": "object",
+        "properties": {
+         "id": {
+          "type": "string",
+          "description": "id ảnh người dùng tải lên (img1, img2…)"
+         },
+         "shape": {
+          "description": "Chỉ ghi khi muốn khác khung mặc định của slide",
+          "type": "string",
+          "enum": [
+           "diamond",
+           "hex",
+           "hexTall",
+           "slantR",
+           "slantL",
+           "shard",
+           "tab",
+           "arrow",
+           "blob",
+           "circle"
+          ]
+         }
+        },
+        "required": [
+         "id"
+        ],
+        "additionalProperties": false,
+        "description": "Ảnh trang trí cắt khối"
+       }
+      },
+      "required": [
+       "type",
+       "label",
+       "title",
+       "conclusion",
+       "recommendations"
+      ],
+      "additionalProperties": false
+     },
+     {
+      "type": "object",
+      "properties": {
+       "type": {
+        "type": "string",
+        "const": "thanks"
+       },
+       "message": {
+        "type": "string"
+       },
+       "notes": {
+        "description": "Lời thuyết trình 1–2 câu",
+        "type": "string"
+       },
+       "image": {
+        "type": "object",
+        "properties": {
+         "id": {
+          "type": "string",
+          "description": "id ảnh người dùng tải lên (img1, img2…)"
+         },
+         "shape": {
+          "description": "Chỉ ghi khi muốn khác khung mặc định của slide",
+          "type": "string",
+          "enum": [
+           "diamond",
+           "hex",
+           "hexTall",
+           "slantR",
+           "slantL",
+           "shard",
+           "tab",
+           "arrow",
+           "blob",
+           "circle"
+          ]
+         }
+        },
+        "required": [
+         "id"
+        ],
+        "additionalProperties": false,
+        "description": "Ảnh trang trí cắt khối"
+       }
+      },
+      "required": [
+       "type"
+      ],
+      "additionalProperties": false
+     }
+    ]
+   }
+  }
+ },
+ "required": [
+  "meta",
+  "theme",
+  "issues",
+  "slides"
+ ],
+ "additionalProperties": false
+}

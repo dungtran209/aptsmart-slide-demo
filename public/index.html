@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>APTsmart Slide – Tạo slide bảo vệ luận văn</title>
+  <meta name="description" content="Tải luận văn .docx, nhận bộ slide bảo vệ PDF và PPTX theo quy chuẩn học thuật.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2 30 16 16 30 2 16z' fill='%230E5E5B'/%3E%3Cpath d='M16 9 23 16 16 23 9 16z' fill='%23F2B33D'/%3E%3C/svg%3E">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap top-in">
+      <div class="brand">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 30 16 16 30 2 16z" fill="currentColor"/><path d="M16 9 23 16 16 23 9 16z" fill="var(--accent)"/></svg>
+        <div><strong>APTsmart Slide</strong><span>Slide bảo vệ luận văn · đề án</span></div>
+      </div>
+      <div class="top-meta">
+        <span id="modeBadge" class="badge" hidden></span>
+        <span id="quota" class="quota"></span>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <h1>Từ luận văn <em>.docx</em> đến bộ slide bảo vệ</h1>
+      <p>Tải luận văn, logo và vài ảnh đơn vị. Hệ thống đọc toàn bộ nội dung, chọn bảng số liệu, viết tóm tắt và dựng 22–25 slide theo quy chuẩn học thuật v5.2 — xuất cả <b>PDF</b> để xem và <b>PPTX</b> để chỉnh sửa.</p>
+    </section>
+
+    <!-- Cổng mật khẩu -->
+    <section id="gate" class="card gate" hidden>
+      <h2>Nhập mật khẩu truy cập</h2>
+      <p class="muted">Trang đang ở giai đoạn thử nghiệm. Mật khẩu do quản trị viên cung cấp.</p>
+      <form id="gateForm" class="gate-row">
+        <input id="gatePass" type="password" autocomplete="current-password" placeholder="Mật khẩu" required>
+        <button class="btn primary" type="submit">Vào trang</button>
+      </form>
+      <p id="gateErr" class="err" role="alert"></p>
+    </section>
+
+    <form id="mainForm" class="grid" hidden novalidate>
+      <div class="col-main">
+        <section class="card">
+          <div class="step-h"><span class="num">1</span><h2>Luận văn / đề án <span class="req">bắt buộc</span></h2></div>
+          <label class="drop" id="thesisDrop">
+            <input type="file" id="thesis" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h8l6 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm7 1.5V9h5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 13h8M8 17h5" stroke="currentColor" stroke-width="1.6"/></svg>
+            <span class="drop-t" id="thesisName">Kéo thả file <b>.docx</b> vào đây hoặc bấm để chọn</span>
+            <span class="drop-s">Chỉ nhận .docx (không nhận PDF/ảnh scan)</span>
+          </label>
+        </section>
+
+        <section class="card">
+          <div class="step-h"><span class="num">2</span><h2>Logo</h2></div>
+          <div class="logos">
+            <label class="tile" id="schoolTile">
+              <input type="file" id="schoolLogo" accept="image/png,image/jpeg" hidden>
+              <span class="tile-img"></span><span class="tile-t">Logo trường</span><span class="tile-s">PNG/JPG, nền trong suốt càng tốt</span>
+            </label>
+            <label class="tile" id="orgTile">
+              <input type="file" id="orgLogo" accept="image/png,image/jpeg" hidden>
+              <span class="tile-img"></span><span class="tile-t">Logo đơn vị nghiên cứu</span><span class="tile-s">Màu slide được lấy từ logo này</span>
+            </label>
+          </div>
+          <div id="swatches" class="swatches" hidden><span>Màu lấy từ logo:</span><i id="sw1"></i><code id="sw1t"></code><i id="sw2"></i><code id="sw2t"></code></div>
+        </section>
+
+        <section class="card">
+          <div class="step-h"><span class="num">3</span><h2>Ảnh đơn vị <span class="hint" id="imgHint">3–8 ảnh</span></h2></div>
+          <p class="muted small">Trụ sở, quầy giao dịch, nhân viên, hoạt động tập thể… Ảnh được cắt theo khung hình khối để trang trí bìa, trang chương và slide nội dung.</p>
+          <label class="drop small-drop" id="imgDrop">
+            <input type="file" id="images" accept="image/png,image/jpeg" multiple hidden>
+            <span class="drop-t">Kéo thả ảnh vào đây hoặc bấm để chọn</span>
+          </label>
+          <ul id="thumbs" class="thumbs"></ul>
+        </section>
+      </div>
+
+      <aside class="col-side">
+        <section class="card">
+          <div class="step-h"><span class="num">4</span><h2>Thông tin <span class="hint">tùy chọn</span></h2></div>
+          <p class="muted small">Để trống thì hệ thống tự lấy từ trang bìa luận văn.</p>
+          <div class="fields">
+            <label>Tên học viên<input name="student" maxlength="80" placeholder="VD: Nguyễn Văn A"></label>
+            <label>Giảng viên hướng dẫn<input name="supervisor" maxlength="80" placeholder="VD: TS. Trần Thị B"></label>
+            <label>Trường<input name="school" maxlength="120" placeholder="VD: Học viện Tài chính"></label>
+            <div class="two">
+              <label>Hệ đào tạo<input name="degree" maxlength="60" list="degrees" placeholder="Đề án thạc sĩ"></label>
+              <label>Năm<input name="year" maxlength="4" inputmode="numeric" placeholder="2026"></label>
+            </div>
+            <datalist id="degrees"><option>Khóa luận tốt nghiệp</option><option>Luận văn thạc sĩ</option><option>Đề án tốt nghiệp thạc sĩ</option><option>Luận văn MBA</option><option>Luận án tiến sĩ</option></datalist>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="step-h"><span class="num">5</span><h2>Giao diện <span class="hint">tùy chọn</span></h2></div>
+          <div class="fields">
+            <div class="color-row">
+              <label class="chk"><input type="checkbox" id="autoColor" checked> Màu tự động theo logo đơn vị</label>
+              <div class="pickers" id="pickers" hidden>
+                <label>Màu chủ đạo<input type="color" id="primary" value="#0E5E5B"></label>
+                <label>Màu nhấn<input type="color" id="accent" value="#F2B33D"></label>
+              </div>
+            </div>
+            <label>Kiểu khung ảnh
+              <select id="shape" name="shape">
+                <option value="auto">Tự chọn theo quy chuẩn (logo → ngành)</option>
+                <option value="diamond/shard">Hình thoi + cắt góc · ngân hàng, tài chính</option>
+                <option value="hex/slantR">Lục giác + nghiêng · năng động</option>
+                <option value="slantR/shard">Nghiêng + cắt góc · công nghệ, viễn thông</option>
+                <option value="slantR/hex">Nghiêng + lục giác · xây dựng, kỹ thuật</option>
+                <option value="circle/blob">Tròn + bo góc · dịch vụ, giáo dục</option>
+                <option value="blob/circle">Bo góc + tròn · cơ quan nhà nước</option>
+              </select>
+            </label>
+            <div class="shape-prev" id="shapePrev" aria-hidden="true"></div>
+          </div>
+        </section>
+
+        <section class="card submit-card">
+          <p class="privacy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Z" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+            <span>Quyền riêng tư: file chỉ dùng để tạo slide, không lưu lịch sử, không ghi nội dung vào nhật ký và <b>tự xóa sau <span id="ttl">60</span> phút</b>. Nội dung luận văn được gửi tới Claude API (Anthropic) để phân tích.</span></p>
+          <button class="btn primary big" id="submitBtn" type="submit">Tạo slide</button>
+          <p id="formErr" class="err" role="alert"></p>
+        </section>
+      </aside>
+    </form>
+
+    <!-- Tiến trình -->
+    <section id="progress" class="card progress" hidden aria-live="polite">
+      <h2>Đang tạo slide…</h2>
+      <ol class="steps" id="steps">
+        <li data-step="upload">Tải file lên</li>
+        <li data-step="extract">Đọc luận văn</li>
+        <li data-step="ai">Phân tích nội dung</li>
+        <li data-step="render">Dựng slide</li>
+        <li data-step="pdf">Xuất PDF</li>
+      </ol>
+      <div class="bar"><span id="barFill"></span></div>
+      <p class="muted" id="progMsg">Đang chuẩn bị…</p>
+      <p class="muted small">Thường mất 1–4 phút. Có thể để tab này mở và làm việc khác.</p>
+    </section>
+
+    <!-- Kết quả -->
+    <section id="result" class="card result" hidden>
+      <div class="result-h">
+        <div>
+          <h2>Slide đã sẵn sàng</h2>
+          <p class="muted" id="resMeta"></p>
+        </div>
+        <div class="dl">
+          <a class="btn primary" id="dlPdf" href="#" download>Tải PDF</a>
+          <a class="btn" id="dlPptx" href="#" download>Tải PPTX</a>
+        </div>
+      </div>
+      <div class="facts" id="facts"></div>
+      <div id="issuesBox" class="issues">
+        <h3>Số liệu mâu thuẫn phát hiện trong luận văn</h3>
+        <ul id="issues"></ul>
+      </div>
+      <details id="warnBox" class="warns"><summary>Ghi chú kỹ thuật (<span id="warnN">0</span>)</summary><ul id="warns"></ul></details>
+      <p class="muted small" id="expire"></p>
+      <button class="btn ghost" id="again" type="button">Tạo bộ slide khác</button>
+    </section>
+
+    <section id="failed" class="card failed" hidden role="alert">
+      <h2>Chưa tạo được slide</h2>
+      <p id="failMsg"></p>
+      <button class="btn" id="retry" type="button">Thử lại</button>
+    </section>
+  </main>
+
+  <footer class="wrap foot">APTsmart Slide · bản demo · Quy chuẩn slide bảo vệ v5.2</footer>
+  <script src="app.js"></script>
+</body>
+</html>

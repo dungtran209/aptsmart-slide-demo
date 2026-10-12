@@ -1,0 +1,22 @@
+# Khai báo dịch vụ Render (Blueprint). Có thể tạo dịch vụ thủ công thay vì dùng file này — xem README.
+services:
+  - type: web
+    name: aptsmart-slide-demo
+    runtime: docker
+    plan: free            # nếu LibreOffice thiếu RAM (lỗi xuất PDF / dịch vụ khởi động lại) → đổi sang starter
+    region: singapore
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false        # nhập trên giao diện Render, không lưu trong repo
+      - key: ACCESS_PASSWORD
+        sync: false
+      - key: CLAUDE_MODEL
+        value: claude-sonnet-5-5
+      - key: DAILY_LIMIT
+        value: "10"
+      - key: MAX_UPLOAD_MB
+        value: "30"
+      - key: FILE_TTL_MIN
+        value: "60"
