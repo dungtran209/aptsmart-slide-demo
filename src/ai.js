@@ -95,16 +95,16 @@ async function generateDeck(p) {
   let last = null, lastErrors = [];
 
   for (let attempt = 1; attempt <= 2; attempt++) {
-    p.onProgress && p.onProgress(attempt === 1 ? 25 : 55, attempt === 1 ? "Claude đang phân tích nội dung luận văn…" : "Claude đang sửa các lỗi kiểm tra…");
+    p.onProgress && p.onProgress(attempt === 1 ? 25 : 55, attempt === 1 ? "Đang phân tích nội dung luận văn…" : "Đang sửa các lỗi kiểm tra…");
     const stream = client.messages.stream({ model, max_tokens: maxTokens, system, messages });
     let chars = 0;
-    stream.on("text", d => { chars += d.length; if (p.onProgress && chars % 2000 < d.length) p.onProgress(Math.min(attempt === 1 ? 52 : 72, (attempt === 1 ? 28 : 58) + chars / 1500), "Claude đang viết nội dung slide…"); });
+    stream.on("text", d => { chars += d.length; if (p.onProgress && chars % 2000 < d.length) p.onProgress(Math.min(attempt === 1 ? 52 : 72, (attempt === 1 ? 28 : 58) + chars / 1500), "Đang viết nội dung slide…"); });
     const msg = await stream.finalMessage();
     const u = msg.usage || {};
     usage.input += u.input_tokens || 0; usage.output += u.output_tokens || 0;
     usage.cacheRead += u.cache_read_input_tokens || 0; usage.cacheWrite += u.cache_creation_input_tokens || 0;
     p.log && p.log(`AI attempt ${attempt}: model=${model} stop=${msg.stop_reason} in=${u.input_tokens} out=${u.output_tokens} cacheR=${u.cache_read_input_tokens || 0} cacheW=${u.cache_creation_input_tokens || 0}`);
-    if (msg.stop_reason === "refusal") throw new Error("Claude từ chối xử lý tài liệu này.");
+    if (msg.stop_reason === "refusal") throw new Error("Hệ thống không xử lý được tài liệu này.");
     const text = msg.content.filter(b => b.type === "text").map(b => b.text).join("");
 
     let raw = null, errors = [];
@@ -123,7 +123,7 @@ async function generateDeck(p) {
     }
   }
   if (last) return { deck: last, usage, attempts: 2, warnings: [...warnings, ...lastErrors.map(e => "Chưa đạt: " + e)], model, needsRepair: true };
-  throw new Error("Claude chưa trả được deck.json hợp lệ: " + lastErrors.slice(0, 3).join("; "));
+  throw new Error("Chưa tạo được nội dung slide hợp lệ: " + lastErrors.slice(0, 3).join("; "));
 }
 
 module.exports = { generateDeck, systemPrompt, parseJson };
