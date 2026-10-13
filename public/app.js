@@ -194,7 +194,7 @@
       `<span class="fact">${R.pages} slide</span>`,
       `<span class="fact"><i style="background:#${esc(R.colors.primary)}"></i>#${esc(R.colors.primary)} <i style="background:#${esc(R.colors.accent)}"></i>#${esc(R.colors.accent)}</span>`,
       `<span class="fact">Khung: ${esc(shapeName[R.shapes.main] || R.shapes.main)} + ${esc(shapeName[R.shapes.sub] || R.shapes.sub)}</span>`,
-      `<span class="fact">${R.ai.mode === "mock" ? "Nội dung: giả lập" : "Nội dung: Claude"}</span>`,
+      `<span class="fact">${R.ai.mode === "mock" ? "Nội dung: giả lập" : "Nội dung: APTsmart AI"}</span>`,
       `<span class="fact">${R.seconds} giây</span>`,
     ].join("");
     $("#issues").innerHTML = R.issues.length ? R.issues.map(i => `<li><b>${esc(i.where)}:</b> ${esc(i.detail)}</li>`).join("") : "<li>Không phát hiện mâu thuẫn số liệu.</li>";
